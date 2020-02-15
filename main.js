@@ -1,11 +1,30 @@
-const express = require('express')
-const app = express()
-const port = 3000
+var config = {
+    type: Phaser.AUTO,
+    width: window.innerWidth,
+    height: window.innerHeight,
+    scene: {
+        preload: preload,
+        create: create,
+        update: update
+    }
+};
 
-var path = require('path');
+var game = new Phaser.Game(config);
+var titleScene = new TitleScene(window.innerWidth, window.innerHeight);
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
-});
+function preload ()
+{
+}
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+function create ()
+{
+    
+}
+
+function update ()
+{
+    
+}
+
+game.scene.add('titleScene', titleScene);
+game.scene.start('titleScene');
