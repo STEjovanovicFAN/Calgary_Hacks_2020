@@ -11,6 +11,8 @@ class TitleScene extends Phaser.Scene
     }
 
     create() {
-        var text = this.add.text(this.displayWidth / 2, this.displayHeight / 2, "Mini Donut Madness");
+        var text = this.add.text(0, 0, "Midway Madness", {fontSize: '32px'});
+        text.y = (this.displayHeight - text.height) / 2;
+        text.x = (this.displayWidth - text.width) / 2;
     }
 }
