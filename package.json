@@ -4,13 +4,13 @@
   "description": "mini donut maddness game",
   "main": "main.js",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "phaser": "^3.22.0"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node main.js"
-
   },
   "repository": {
     "type": "git",

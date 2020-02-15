@@ -21,10 +21,27 @@
 
     function preload ()
     {
+        game.load.image('sky', 'assets/sky.png');
     }
 
     function create ()
     {
+        game.add.sprite(100,100,'donut');
+        /*
+        game.stage.backgroundColor = '#124184';
+
+        game.physics.startSystem(Phaser.Physics.BOX2D);
+        game.physics.box2d.gravity.y = 500;
+        game.physics.box2d.friction = 0.9;
+
+        // Add some sprites to show how conveyor behaves
+        for (var i = 0; i < 10; i++)
+        {
+            var sprite = game.add.sprite(Math.random() * 800, Math.random * -200, 'donut');
+            game.physics.box2d.enable(sprite);
+            littleBoxes.push(sprite);
+        }
+        */
     }
 
     function update ()
