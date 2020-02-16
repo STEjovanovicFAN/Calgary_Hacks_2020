@@ -45,6 +45,22 @@ class Level extends Phaser.Scene {
         donut.setScale(2)
         this.donutRotation.push(rotation);
     }
+    createBucket(matter) {
+        let bucket = matter.add.sprite(400, 100, 'cowboyhat');
+        bucket.displayHeight = 150;
+        bucket.displayWidth = 150;
+        bucket.setInteractive();
+        bucket.setIgnoreGravity(true);
+        // bucket.setSize(1150,300);
+        // bucket.setOffset(70, 750);
+        return bucket;
+    }
+    collectDonut(bucket, donut) {
+        donut.disableBody(true, true);
+    
+        score += 1;
+        scoreText.setText('Score: ' + score);
+    }
     genRandomRotation() {
         return ((Math.random() * 6.28) - 3.14) / 180
     }
@@ -54,21 +70,31 @@ class Level extends Phaser.Scene {
         this.load.image('donut2', 'assets/sprites/Plain1.png')
         this.load.image('donut3', 'assets/sprites/PowderSugared-icon.png')
 
+        this.load.image("cowboyhat",'assets/sprites/cowboyhat.png')
         this.load.image('sky', 'assets/background/sky.png')
         this.load.image('calgaryStampede', 'assets/background/cal.png')
     }
 
-
-    create() {
-
-       // let floor = new Phaser.Geom.Rectangle(0, 550, 800, 50);
+    create ()
+    {
+        this.scoreText = this.add.text(32, 72, 'Score: 0');
+        this.initialTime = 120;
 
         this.createBackground(this.matter)
 
-        this.initialTime = 120;
+        this.initialTime = 0;
         this.timer = this.add.text(32, 32, 'Countdown: ' + this.formatTime(this.initialTime));
         //timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
         this.add.text(32, 50, 'Level: ' + this.level);
+
+        var matter = this.matter;
+        var bucket = this.createBucket(this.matter);
+        
+        // this.matter.world.on('collisionstart', function(event, b, donut){
+        //     console.log(donut);
+        // });
+
+
         this.matter.world.setBounds(0, -40)
        
         this.matter.add.mouseSpring({ length: 1, stiffness: 0.02 });
@@ -117,7 +143,7 @@ class Level extends Phaser.Scene {
             this.initialTime -= 1; // One second
             this.timer.setText('Countdown: ' + this.formatTime(this.initialTime));
             if(this.initialTime % 10 == 0){
-                for (var i = 0; i < (this.level + 9); i++) {
+                for (var i = 0; i < (this.level + 4); i++) {
                     this.createDonut(this.matter, this.genRandomRotation());
                 }
                 this.level++;
