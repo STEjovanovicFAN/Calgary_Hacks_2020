@@ -26,10 +26,20 @@ var level = 1;
 function preload ()
 {
     this.load.image('donut', '/assets/sprites/Plain1.png')
+    this.load.image('sky', '/assets/background/sky.png' )
+
+    this.load.image('sky', '/assets/background/calgarystampede.png' )
 }
 
 function create ()
 {
+    sky = this.add.sprite(0,0, 'sky');
+    sky.displayWidth = this.sys.canvas.width;
+    sky.displayHeight = this.sys.canvas.height; 
+
+    //sky.width = window.innerWidth;
+    //sky.height = window.innerHeight;
+
 
     //timer 
     this.initialTime = 120;
@@ -38,6 +48,8 @@ function create ()
 
     //level 
     this.add.text(32, 50, 'Level: ' + level);
+    
+
     
     this.input.on('dragstart', function (pointer, gameObject) {
 
@@ -148,7 +160,7 @@ function onEvent ()
 {
     if(this.initialTime != 0){
         this.initialTime -= 1; // One second
-        text.setText('Countdown: ' + formatTime(this.initialTime));
+        timer.setText('Countdown: ' + formatTime(this.initialTime));
     }
     else{
 
