@@ -1,7 +1,7 @@
-class TitleScene extends Phaser.Scene
+class GameOverScene extends Phaser.Scene
 {
     constructor(w, h) {
-        super({key: "titleScene"});
+        super({key: "gameOverScene"});
         this.displayHeight = h;
         this.displayWidth = w;
         this.donuts = [];
@@ -47,28 +47,42 @@ class TitleScene extends Phaser.Scene
 
         let cs = this.matter.add.sprite(this.displayWidth/2,this.displayHeight/2, 'calgaryStampede');
         cs.setTrapezoid(cs.width, cs.height-100, 0.8)
-        cs.setStatic(true)
         cs.setScale(0.5)
         cs.y -= 100
-        
+        cs.setStatic(true)
+        var path = '0 200 200 0 400 200';
+
+        //  The direct Matter way:
+    
+        // var verts = Phaser.Physics.Matter.Matter.Vertices.fromPath(path);
+    
+        // var body = Phaser.Physics.Matter.Matter.Bodies.fromVertices(408, 492, verts, { ignoreGravity: true }, true, 0.01, 10);
+    
+        // Phaser.Physics.Matter.Matter.World.add(this.matter.world.localWorld, body);
+    
+        //  Or the short-cut version using factory helpers:
+    
+        var verts = this.matter.verts.fromPath(path);
+    
         this.matter.world.setBounds(0, 0, this.displayWidth, this.displayHeight, 64, true, true, false, true)
         for (var i = 0; i < 10; i++) {
             this.createDonut(this.matter, this.genRandomRotation())
         }
         this.matter.add.mouseSpring({ length: 1, stiffness: 0.02 });
 
-        var text = this.add.text(0, 0, "Midway Madness", {color: '#EE0000', fontSize: '32px', fontFamily:"Candara" });
+        var text = this.add.text(0, 0, "Game Over", {color: '#EE0000', fontSize: '32px', fontFamily:"Candara" });
         
         text.y = (this.displayHeight - text.height) / 2 + 96
         text.x = (this.displayWidth - text.width) / 2;
         
-        var button = this.add.sprite(0, 0, 'startbutton_up')
+        var button = this.matter.add.sprite(0, 0, 'startbutton_up')
+        button.setStatic(true)
         button.x = text.x + (text.width/2)
         button.y = text.y + text.height + 128
 
-        var buttonText = this.add.text(0, 0, "Start", {fontSize: '24px'});
+        var buttonText = this.add.text(0, 0, "Retry?", {fontSize: '24px'});
         function resizeButton() {
-            buttonText.x = button.x - (button.width - buttonText.width) / 3.2
+            buttonText.x = button.x - (button.width - buttonText.width) / 2.4
             buttonText.y = button.y - (button.height - buttonText.height) / 1.2
         }
         button.setInteractive()
@@ -87,7 +101,7 @@ class TitleScene extends Phaser.Scene
         })
         button.on('pointerup', function() {
             button.setTexture('startbutton_over')
-            _this.scene.switch('levelOne')
+            window.location.reload()
         })
         resizeButton()
     }
@@ -99,7 +113,7 @@ class TitleScene extends Phaser.Scene
         {
             var donut = donuts[i];
             donut.rotation += donutRotation[i]
-            if (donut.y > this.displayHeight/2)
+            if (false &&donut.y > this.displayHeight/2)
             {
                 donuts.splice(i, 1)
                 donutRotation.splice(i, 1)
