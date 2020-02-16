@@ -73,10 +73,17 @@ class Level extends Phaser.Scene {
         this.load.image("cowboyhat",'assets/sprites/cowboyhat.png')
         this.load.image('sky', 'assets/background/sky.png')
         this.load.image('calgaryStampede', 'assets/background/cal.png')
+
+        this.load.audio('theme',
+        ['assets/sounds/country.mp3']);
     }
 
     create ()
     {
+
+        var music = this.sound.add('theme');
+        music.play();
+
         this.scoreText = this.add.text(32, 72, 'Score: 0');
         this.initialTime = 120;
 
