@@ -47,6 +47,7 @@ class Level extends Phaser.Scene {
         });
         this.donutRotation.push(rotation);
 
+        //Phaser.Geom.Rectangle.Overlaps(this.scene.physics.world.bounds, sprite.getBounds())
 
     }
     createDonut(matter, rotation) {
@@ -181,6 +182,19 @@ class Level extends Phaser.Scene {
                 //this.createDonut(this.matter, this.genRandomRotation())
             }
         }
+
+        for(var j = 0; j < this.boots.length; j++){
+            //console.log(this.boots[j].getBounds())
+            var boot = this.boots[j];
+            console.log(boot.y)
+            if(boot.y < 54){
+                this.boots.splice(j, 1)
+                this.matter.world.remove(boot)
+                boot.visible = false
+
+            }
+        }
+
         if (this.elapsedTime >= 45) {
             this.elapsedTime = 0
             this.initialTime += 1; // One second
