@@ -112,10 +112,10 @@ class Level extends Phaser.Scene {
         this.createBackground(this.matter)
 
         this.initialTime = 0;
-        var scoreText = this.add.text(32, 99, 'Score: 0',{fontSize: '32px'});
-        this.timer = this.add.text(32, 33, 'Timer: ' + this.formatTime(this.initialTime),{fontSize: '32px'});
+        var scoreText = this.add.text(32, 99, 'Score: 0',{fontSize: '64px'});
+        this.timer = this.add.text(32, 33, 'Timer: ' + this.formatTime(this.initialTime),{fontSize: '64px'});
         //timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
-        this.levelMsg = this.add.text(32, 66, 'Level: ' + this.level,{fontSize: '32px'});
+        this.levelMsg = this.add.text(32, 66, 'Level: ' + this.level,{fontSize: '64px'});
 
         var matter = this.matter;
         var bucket = this.createBucket(this.matter);
