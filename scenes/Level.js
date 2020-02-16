@@ -35,8 +35,10 @@ class Level extends Phaser.Scene {
     }
     createDonut(matter, rotation) {
         let donut = matter.add.sprite(Math.random() * window.innerWidth, Math.random() * 100);
+        donut.setBody('circle', {'label': 'donut'});
         donut.setTexture('donut' + Math.floor(Math.random() * 4));
         donut.setInteractive();
+        donut.label = "donut";
         this.donuts.push(donut);
         let _donutRotation = this.donutRotation
         let val = _donutRotation.length;
@@ -56,9 +58,11 @@ class Level extends Phaser.Scene {
         // bucket.setOffset(70, 750);
         return bucket;
     }
-    collectDonut(bucket, donut) {
-        donut.disableBody(true, true);
-    
+    collectDonut(matter, bodyB) {
+        if (bodyB.label === 'donut') {
+            bodyB.visible = false
+            matter.world.remove(bodyB);
+        }    
         score += 1;
         scoreText.setText('Score: ' + score);
     }
@@ -83,14 +87,15 @@ class Level extends Phaser.Scene {
     {
 
         var music = this.sound.add('theme');
+        var score = 0;
         music.play();
 
-        this.scoreText = this.add.text(32, 72, 'Score: 0');
         this.initialTime = 120;
 
         this.createBackground(this.matter)
 
         this.initialTime = 0;
+        var scoreText = this.add.text(32, 72, 'Score: 0');
         this.timer = this.add.text(32, 32, 'Timer: ' + this.formatTime(this.initialTime));
         //timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
         this.levelMsg = this.add.text(32, 50, 'Level: ' + this.level);
@@ -98,9 +103,14 @@ class Level extends Phaser.Scene {
         var matter = this.matter;
         var bucket = this.createBucket(this.matter);
         
-        // this.matter.world.on('collisionstart', function(event, b, donut){
-        //     console.log(donut);
-        // });
+        this.matter.world.on('collisionstart', function(event, bodyA, bodyB){
+            if (bodyB.label === 'donut') {
+                bodyB.visible = false
+                matter.world.remove(bodyB);
+                score += 1;
+                scoreText.setText('Score: ' + score);
+            }
+        });
 
 
         this.matter.world.setBounds(0, -40)
