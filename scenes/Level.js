@@ -29,6 +29,7 @@ class Level extends Phaser.Scene
         let cs = this.add.sprite(this.displayWidth/2,this.displayHeight/2);
         cs.setTexture('calgaryStampede')
         cs.setScale(0.5)
+        console.log(this.matter.world);
 
     }
     createDonut(matter, rotation)
@@ -64,7 +65,7 @@ class Level extends Phaser.Scene
 
         this.createBackground(this.matter)
 
-        this.initialTime = 120;
+        this.initialTime = 10;
         this.timer = this.add.text(32, 32, 'Countdown: ' + this.formatTime(this.initialTime));
         //timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
         this.add.text(32, 50, 'Level: ' + this.level);
@@ -113,11 +114,18 @@ class Level extends Phaser.Scene
         }
         if(this.elapsedTime >= 45) {
             this.elapsedTime = 0
-            this.initialTime -= 1; // One second
-            this.timer.setText('Countdown: ' + this.formatTime(this.initialTime));
+            if(this.initialTime > 0){
+                this.initialTime -= 1; // One second
+                this.timer.setText('Countdown: ' + this.formatTime(this.initialTime));
+            }
+
+            else{
+                //TODO transition to error state
+            }
+
         }
         else{
-            this.elapsedTime ++
+            this.elapsedTime ++;
         }
     }
     
