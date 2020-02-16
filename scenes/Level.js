@@ -1,5 +1,5 @@
 class Level extends Phaser.Scene {
-    
+
     constructor(w, h) {
         super({ key: "levelOne" });
         this.displayHeight = h;
@@ -34,9 +34,9 @@ class Level extends Phaser.Scene {
         cs.setScale(0.5)
 
     }
-    createBoot(matter, rotation){
+    createBoot(matter, rotation) {
         let boot = matter.add.sprite(Math.random() * window.innerWidth, Math.random() * 100);
-        boot.setBody('square', {'label': 'boot'});
+        boot.setBody('square', { 'label': 'boot' });
         boot.setInteractive();
         this.boots.push(boot);
         let _donutRotation = this.donutRotation
@@ -51,7 +51,7 @@ class Level extends Phaser.Scene {
     }
     createDonut(matter, rotation) {
         let donut = matter.add.sprite(Math.random() * window.innerWidth, Math.random() * 100);
-        donut.setBody('circle', {'label': 'donut'});
+        donut.setBody('circle', { 'label': 'donut' });
         donut.setTexture('donut' + Math.floor(Math.random() * 4));
         donut.setInteractive();
         donut.label = "donut";
@@ -66,10 +66,10 @@ class Level extends Phaser.Scene {
     }
     createBucket(matter) {
         let bucket = matter.add.sprite(400, 300, 'cowboyhat');
-        bucket.setBody('circle', {'label': 'cowboyhat'});
+        bucket.setBody('circle', { 'label': 'cowboyhat' });
         bucket.displayHeight = 150;
         bucket.displayWidth = 150;
-        bucket.setInteractive();
+        //bucket.setInteractive();
         bucket.setIgnoreGravity(true);
         // bucket.setSize(1150,300);
         // bucket.setOffset(70, 750);
@@ -79,7 +79,7 @@ class Level extends Phaser.Scene {
         if (bodyB.label === 'donut') {
             bodyB.visible = false
             matter.world.remove(bodyB);
-        }    
+        }
         score += 1;
         scoreText.setText('Score: ' + score);
     }
@@ -93,16 +93,15 @@ class Level extends Phaser.Scene {
         this.load.image('donut3', 'assets/sprites/PowderSugared-icon.png')
         this.load.image('boot', 'assets/sprites/boot.png')
 
-        this.load.image("cowboyhat",'assets/sprites/cowboyhat.png')
+        this.load.image("cowboyhat", 'assets/sprites/cowboyhat.png')
         this.load.image('sky', 'assets/background/sky.png')
         this.load.image('calgaryStampede', 'assets/background/cal.png')
 
         this.load.audio('theme',
-        ['assets/sounds/country.mp3']);
+            ['assets/sounds/country.mp3']);
     }
 
-    create ()
-    {
+    create() {
 
         var music = this.sound.add('theme');
         var score = 0;
@@ -113,17 +112,17 @@ class Level extends Phaser.Scene {
         this.createBackground(this.matter)
 
         this.initialTime = 0;
-        var scoreText = this.add.text(32, 72, 'Score: 0');
-        this.timer = this.add.text(32, 32, 'Timer: ' + this.formatTime(this.initialTime));
+        var scoreText = this.add.text(32, 99, 'Score: 0',{fontSize: '32px'});
+        this.timer = this.add.text(32, 33, 'Timer: ' + this.formatTime(this.initialTime),{fontSize: '32px'});
         //timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
-        this.levelMsg = this.add.text(32, 50, 'Level: ' + this.level);
+        this.levelMsg = this.add.text(32, 66, 'Level: ' + this.level,{fontSize: '32px'});
 
         var matter = this.matter;
         var bucket = this.createBucket(this.matter);
-        
-        this.matter.world.on('collisionstart', function(event, bodyA, bodyB){
+
+        this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
             if ((bodyA.label === 'cowboyhat' && bodyB.label === 'donut') ||
-            (bodyA.label === 'donut' && bodyB.label === 'cowboyhat')) {
+                (bodyA.label === 'donut' && bodyB.label === 'cowboyhat')) {
 
                 const donutBody = bodyA.label === 'donut' ? bodyA : bodyB;
                 const donut = donutBody.gameObject;
@@ -136,7 +135,7 @@ class Level extends Phaser.Scene {
         });
 
         this.matter.world.setBounds(0, -40)
-       
+
         this.matter.add.mouseSpring({ length: 1, stiffness: 0.02 });
         this.input.on('dragstart', function (pointer, gameObject) {
 
@@ -159,7 +158,7 @@ class Level extends Phaser.Scene {
 
         for (var i = 0; i < 10; i++) {
             this.createDonut(this.matter, this.genRandomRotation())
-            if(Math.random() * i %7 == 0){
+            if (Math.random() * i % 7 == 0) {
                 this.createBoot(this.matter, this.genRandomRotation())
             }
         }
@@ -186,11 +185,15 @@ class Level extends Phaser.Scene {
             this.elapsedTime = 0
             this.initialTime += 1; // One second
             this.timer.setText('Timer: ' + this.formatTime(this.initialTime));
-            if(this.initialTime % 10 == 0){
-                for (var i = 0; i < (this.level + 4); i++) {
-                    if(i == 0){
-                        this.level++;
-                    }
+            if (this.initialTime % 10 == 0) {
+                for (var i = 0; i < (donuts.length); i++) {
+                    this.matter.world.remove(donuts[i]);
+                    donuts[i].visible = false;
+                }
+                this.level++;
+            }
+            if (this.initialTime % 3 == 0) {
+                for (var i = 0; i < (this.level + 9); i++) {
                     this.createDonut(this.matter, this.genRandomRotation());
                 }
             }
