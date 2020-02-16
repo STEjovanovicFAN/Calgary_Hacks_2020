@@ -20,21 +20,33 @@ class Level extends Phaser.Scene
         // Returns formated time
         return `${minutes}:${partInSeconds}`;
     }
+
+    createBackground(matter){
+        let sky = this.add.sprite(0,0);
+        sky.setTexture('sky');
+        sky.setScale(7);
+
+        let cs = this.add.sprite(this.displayWidth/2,this.displayHeight/2);
+        cs.setTexture('calgaryStampede')
+        cs.setScale(0.5)
+
+    }
     createDonut(matter, rotation)
     {
         let donut = matter.add.sprite(Math.random() * window.innerWidth, Math.random() * -40); 
         donut.setTexture('donut' + Math.floor(Math.random() * 4));
         donut.setInteractive();
         this.donuts.push(donut);
-        let val = this.donutRotation.length;
+        let _donutRotation = this.donutRotation
+        let val = _donutRotation.length;
         donut.on('pointerdown', function() {
-            donutRotation[val] = 0;
+            _donutRotation[val] = 0;
         });
         donut.setScale(2)
         this.donutRotation.push(rotation);
     }
     createBucket(matter) {
-        let bucket = matter.add.sprite(400, 100, 'bucket');
+        let bucket = matter.add.sprite(400, 100, 'cowboyhat');
         bucket.displayHeight = 150;
         bucket.displayWidth = 150;
         bucket.setInteractive();
@@ -59,13 +71,19 @@ class Level extends Phaser.Scene
         this.load.image('donut2', 'assets/sprites/Plain1.png')
         this.load.image('donut3', 'assets/sprites/PowderSugared-icon.png')
 
-        this.load.image('bucket', '/assets/sprites/Feeding_Bucket.png')
+        this.load.image('cowboyhat', '/assets/sprites/cowboyhat.png')
+        this.load.image('sky', 'assets/background/sky.png')
+        this.load.image('calgaryStampede', 'assets/background/cal.png')
     }
 
     create ()
     {
         this.scoreText = this.add.text(32, 72, 'Score: 0');
         this.initialTime = 120;
+
+        this.createBackground(this.matter)
+
+        this.initialTime = 10;
         this.timer = this.add.text(32, 32, 'Countdown: ' + this.formatTime(this.initialTime));
         //timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
         this.add.text(32, 50, 'Level: ' + this.level);
@@ -121,13 +139,20 @@ class Level extends Phaser.Scene
                 this.createDonut(this.matter, this.genRandomRotation())
             }
         }
-        if(this.elapsedTime >= 16) {
+        if(this.elapsedTime >= 45) {
             this.elapsedTime = 0
-            this.initialTime -= 1; // One second
-            this.timer.setText('Countdown: ' + this.formatTime(this.initialTime));
+            if(this.initialTime > 0){
+                this.initialTime -= 1; // One second
+                this.timer.setText('Countdown: ' + this.formatTime(this.initialTime));
+            }
+
+            else{
+                //TODO transition to error state
+            }
+
         }
         else{
-            this.elapsedTime ++
+            this.elapsedTime ++;
         }
     }
     

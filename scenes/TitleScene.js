@@ -25,13 +25,13 @@ class TitleScene extends Phaser.Scene
         button.on('pointerout', function () {
             button.setTexture('startbutton_up')
         })
+        var _this = this
         button.on('pointerdown', function() {
             button.setTexture('startbutton_down')
-            game.scene.switch('levelOne')
-            console.log(game.scene.switch)
         })
         button.on('pointerup', function() {
             button.setTexture('startbutton_over')
+            _this.scene.switch('levelOne')
         })
     }
 
