@@ -3,16 +3,13 @@ var config = {
     width: window.innerWidth,
     height: window.innerHeight,
     physics: {
-        default: 'arcade',
-        arcade: {
-            //debug: true,
-            gravity: { y: 500 }
+        default: 'matter',
+        matter: {
+            enableSleeping: true,
+            gravity: {
+                y: 1
+            }
         }
-    },
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
     }
 };
 
@@ -168,4 +165,5 @@ function onEvent ()
 }
 
 game.scene.add('titleScene', titleScene);
-game.scene.start('titleScene');
+game.scene.add('levelOne', levelOne);
+game.scene.start('levelOne');
