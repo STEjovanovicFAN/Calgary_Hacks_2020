@@ -20,6 +20,8 @@ var game = new Phaser.Game(config);
 var titleScene = new TitleScene(window.innerWidth, window.innerHeight);
 
 var donuts = [];
+var timer;
+var level = 1;
 
 function preload ()
 {
@@ -29,6 +31,14 @@ function preload ()
 function create ()
 {
 
+    //timer 
+    this.initialTime = 120;
+    timer = this.add.text(32, 32, 'Countdown: ' + formatTime(this.initialTime));
+    timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
+
+    //level 
+    this.add.text(32, 50, 'Level: ' + level);
+    
     this.input.on('dragstart', function (pointer, gameObject) {
 
         gameObject.setTint(0xff0000);
@@ -78,6 +88,7 @@ function create ()
 
 function update ()
 {
+    //this.input.dragDistanceThreshold = 50;
     this.input.on('dragstart', function (pointer, gameObject) {
 
         gameObject.setTint(0xff0000);
@@ -119,6 +130,28 @@ function update ()
             //donut.body.setZeroVelocity();
             //console.log('hellothere');
         }
+    }
+}
+
+function formatTime(seconds){
+    // Minutes
+    var minutes = Math.floor(seconds/60);
+    // Seconds
+    var partInSeconds = seconds%60;
+    // Adds left zeros to seconds
+    partInSeconds = partInSeconds.toString().padStart(2,'0');
+    // Returns formated time
+    return `${minutes}:${partInSeconds}`;
+}
+
+function onEvent ()
+{
+    if(this.initialTime != 0){
+        this.initialTime -= 1; // One second
+        text.setText('Countdown: ' + formatTime(this.initialTime));
+    }
+    else{
+
     }
 }
 
