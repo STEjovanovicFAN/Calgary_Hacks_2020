@@ -29,7 +29,6 @@ class Level extends Phaser.Scene
         let cs = this.add.sprite(this.displayWidth/2,this.displayHeight/2);
         cs.setTexture('calgaryStampede')
         cs.setScale(0.5)
-        console.log(this.matter.world);
 
     }
     createDonut(matter, rotation)
