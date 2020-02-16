@@ -40,7 +40,7 @@ class Level extends Phaser.Scene {
         this.boots.push(boot);
         let _donutRotation = this.donutRotation
         let val = _donutRotation.length;
-        boot.setScale(0.2)
+        boot.setScale(0.4)
         boot.on('pointerdown', function () {
             _donutRotation[val] = 0;
         });
