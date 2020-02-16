@@ -93,7 +93,7 @@ class Level extends Phaser.Scene
                 this.createDonut(this.matter, this.genRandomRotation())
             }
         }
-        if(this.elapsedTime >= 16) {
+        if(this.elapsedTime >= 45) {
             this.elapsedTime = 0
             this.initialTime -= 1; // One second
             this.timer.setText('Countdown: ' + this.formatTime(this.initialTime));
