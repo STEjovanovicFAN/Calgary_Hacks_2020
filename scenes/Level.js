@@ -26,9 +26,10 @@ class Level extends Phaser.Scene
         donut.setTexture('donut' + Math.floor(Math.random() * 4));
         donut.setInteractive();
         this.donuts.push(donut);
-        let val = this.donutRotation.length;
+        let _donutRotation = this.donutRotation
+        let val = _donutRotation.length;
         donut.on('pointerdown', function() {
-            donutRotation[val] = 0;
+            _donutRotation[val] = 0;
         });
         donut.setScale(2)
         this.donutRotation.push(rotation);
