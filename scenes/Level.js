@@ -33,6 +33,22 @@ class Level extends Phaser.Scene
         donut.setScale(2)
         this.donutRotation.push(rotation);
     }
+    createBucket(matter) {
+        let bucket = matter.add.sprite(400, 100, 'bucket');
+        bucket.displayHeight = 150;
+        bucket.displayWidth = 150;
+        bucket.setInteractive();
+        bucket.setIgnoreGravity(true);
+        // bucket.setSize(1150,300);
+        // bucket.setOffset(70, 750);
+        return bucket;
+    }
+    collectDonut(bucket, donut) {
+        donut.disableBody(true, true);
+    
+        score += 1;
+        scoreText.setText('Score: ' + score);
+    }
     genRandomRotation() {
         return ((Math.random() * 6.28) - 3.14)/180
     }
@@ -42,14 +58,26 @@ class Level extends Phaser.Scene
         this.load.image('donut1', 'assets/sprites/Plain-2-icon.png')
         this.load.image('donut2', 'assets/sprites/Plain1.png')
         this.load.image('donut3', 'assets/sprites/PowderSugared-icon.png')
+
+        this.load.image('bucket', '/assets/sprites/Feeding_Bucket.png')
     }
 
     create ()
     {
+        this.scoreText = this.add.text(32, 72, 'Score: 0');
         this.initialTime = 120;
         this.timer = this.add.text(32, 32, 'Countdown: ' + this.formatTime(this.initialTime));
         //timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
         this.add.text(32, 50, 'Level: ' + this.level);
+
+        var matter = this.matter;
+        var bucket = this.createBucket(this.matter);
+        
+        // this.matter.world.on('collisionstart', function(event, b, donut){
+        //     console.log(donut);
+        // });
+
+
         this.matter.world.setBounds(0, -40)
         for (var i = 0; i < 10; i++) {
             this.createDonut(this.matter, this.genRandomRotation())
