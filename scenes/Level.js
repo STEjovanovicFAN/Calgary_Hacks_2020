@@ -20,6 +20,17 @@ class Level extends Phaser.Scene
         // Returns formated time
         return `${minutes}:${partInSeconds}`;
     }
+
+    createBackground(matter){
+        let sky = this.add.sprite(0,0);
+        sky.setTexture('sky');
+        sky.setScale(7);
+
+        let cs = this.add.sprite(this.displayWidth/2,this.displayHeight/2);
+        cs.setTexture('calgaryStampede')
+        cs.setScale(0.5)
+
+    }
     createDonut(matter, rotation)
     {
         let donut = matter.add.sprite(Math.random() * window.innerWidth, Math.random() * -40); 
@@ -45,10 +56,14 @@ class Level extends Phaser.Scene
         this.load.image('donut3', 'assets/sprites/PowderSugared-icon.png')
 
         this.load.image('sky', 'assets/background/sky.png')
+        this.load.image('calgaryStampede', 'assets/background/cal.png')
     }
 
     create ()
     {
+
+        this.createBackground(this.matter)
+
         this.initialTime = 120;
         this.timer = this.add.text(32, 32, 'Countdown: ' + this.formatTime(this.initialTime));
         //timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
