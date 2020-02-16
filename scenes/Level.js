@@ -42,6 +42,8 @@ class Level extends Phaser.Scene
         this.load.image('donut1', 'assets/sprites/Plain-2-icon.png')
         this.load.image('donut2', 'assets/sprites/Plain1.png')
         this.load.image('donut3', 'assets/sprites/PowderSugared-icon.png')
+
+        this.load.image('sky', 'assets/background/sky.png')
     }
 
     create ()
