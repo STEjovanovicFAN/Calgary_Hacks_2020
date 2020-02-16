@@ -35,7 +35,8 @@ class Level extends Phaser.Scene {
 
     }
     createBoot(matter, rotation){
-        let boot = matter.add.sprite(Math.random() * window.innerWidth, Math.random() * 100, 'boot');
+        let boot = matter.add.sprite(Math.random() * window.innerWidth, Math.random() * 100);
+        boot.setBody('square', {'label': 'boot'});
         boot.setInteractive();
         this.boots.push(boot);
         let _donutRotation = this.donutRotation
@@ -65,7 +66,8 @@ class Level extends Phaser.Scene {
         this.donutRotation.push(rotation);
     }
     createBucket(matter) {
-        let bucket = matter.add.sprite(400, 100, 'cowboyhat');
+        let bucket = matter.add.sprite(400, 300, 'cowboyhat');
+        bucket.setBody('circle', {'label': 'cowboyhat'});
         bucket.displayHeight = 150;
         bucket.displayWidth = 150;
         bucket.setInteractive();
@@ -121,9 +123,14 @@ class Level extends Phaser.Scene {
         var bucket = this.createBucket(this.matter);
         
         this.matter.world.on('collisionstart', function(event, bodyA, bodyB){
-            if (bodyB.label === 'donut') {
-                bodyB.visible = false
-                matter.world.remove(bodyB);
+            if ((bodyA.label === 'cowboyhat' && bodyB.label === 'donut') ||
+            (bodyA.label === 'donut' && bodyB.label === 'cowboyhat')) {
+
+                const donutBody = bodyA.label === 'donut' ? bodyA : bodyB;
+                const donut = donutBody.gameObject;
+
+                donut.visible = false;
+                matter.world.remove(donutBody);
                 score += 1;
                 scoreText.setText('Score: ' + score);
             }
