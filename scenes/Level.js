@@ -8,6 +8,7 @@ class Level extends Phaser.Scene {
         this.donutRotation = [];
         this.elapsedTime = 0;
         this.level = 1
+        this.levelMsg;
     }
 
 
@@ -90,9 +91,9 @@ class Level extends Phaser.Scene {
         this.createBackground(this.matter)
 
         this.initialTime = 0;
-        this.timer = this.add.text(32, 32, 'Countdown: ' + this.formatTime(this.initialTime));
+        this.timer = this.add.text(32, 32, 'Timer: ' + this.formatTime(this.initialTime));
         //timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
-        this.add.text(32, 50, 'Level: ' + this.level);
+        this.levelMsg = this.add.text(32, 50, 'Level: ' + this.level);
 
         var matter = this.matter;
         var bucket = this.createBucket(this.matter);
@@ -133,6 +134,7 @@ class Level extends Phaser.Scene {
     update() {
         let donuts = this.donuts
         let donutRotation = this.donutRotation
+        this.levelMsg.setText('Level: ' + this.level);
         for (var i = 0; i < donuts.length; i++) {
             var donut = donuts[i];
             donut.rotation += donutRotation[i]
@@ -147,13 +149,15 @@ class Level extends Phaser.Scene {
         }
         if (this.elapsedTime >= 45) {
             this.elapsedTime = 0
-            this.initialTime -= 1; // One second
-            this.timer.setText('Countdown: ' + this.formatTime(this.initialTime));
+            this.initialTime += 1; // One second
+            this.timer.setText('Timer: ' + this.formatTime(this.initialTime));
             if(this.initialTime % 10 == 0){
                 for (var i = 0; i < (this.level + 4); i++) {
+                    if(i == 0){
+                        this.level++;
+                    }
                     this.createDonut(this.matter, this.genRandomRotation());
                 }
-                this.level++;
             }
 
 
@@ -161,6 +165,7 @@ class Level extends Phaser.Scene {
         else {
             this.elapsedTime++
         }
+
     }
 
 
