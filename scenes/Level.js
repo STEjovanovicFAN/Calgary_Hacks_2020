@@ -83,7 +83,7 @@ class Level extends Phaser.Scene
 
         this.createBackground(this.matter)
 
-        this.initialTime = 10;
+        this.initialTime = 0;
         this.timer = this.add.text(32, 32, 'Countdown: ' + this.formatTime(this.initialTime));
         //timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
         this.add.text(32, 50, 'Level: ' + this.level);
@@ -141,14 +141,8 @@ class Level extends Phaser.Scene
         }
         if(this.elapsedTime >= 45) {
             this.elapsedTime = 0
-            if(this.initialTime > 0){
-                this.initialTime -= 1; // One second
-                this.timer.setText('Countdown: ' + this.formatTime(this.initialTime));
-            }
-
-            else{
-                //TODO transition to error state
-            }
+            this.initialTime += 1; // One second
+            this.timer.setText('Time: ' + this.formatTime(this.initialTime));
 
         }
         else{
