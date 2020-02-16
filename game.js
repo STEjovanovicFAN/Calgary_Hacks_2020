@@ -28,6 +28,26 @@ function preload ()
 
 function create ()
 {
+
+    this.input.on('dragstart', function (pointer, gameObject) {
+
+        gameObject.setTint(0xff0000);
+
+    });
+
+    this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+
+        gameObject.x = dragX;
+        gameObject.y = dragY;
+
+    });
+
+    this.input.on('dragend', function (pointer, gameObject) {
+
+        gameObject.clearTint();
+
+    });
+
     //var s = this.add.sprite(80, 0, 'donut');
 
     this.physics.world.gravity.y = 60;
@@ -47,7 +67,9 @@ function create ()
         //this.physics.world.enable(sprite);
         //littleBoxes.push(sprite);   
         var donut = group.create(Math.random() * window.innerWidth, Math.random() * -200); 
-        
+        //console.log(donut);
+        donut.setInteractive();
+        this.input.setDraggable(donut);
         donuts.push(donut);
 
     }
@@ -56,6 +78,25 @@ function create ()
 
 function update ()
 {
+    this.input.on('dragstart', function (pointer, gameObject) {
+
+        gameObject.setTint(0xff0000);
+
+    });
+
+    this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+
+        gameObject.x = dragX;
+        gameObject.y = dragY;
+
+    });
+
+    this.input.on('dragend', function (pointer, gameObject) {
+
+        gameObject.clearTint();
+
+    });
+
     var group = this.physics.add.group({
         defaultKey: 'donut'
     });
@@ -68,7 +109,11 @@ function update ()
         {
             donuts.splice(i, 1);
 
-            donuts.push(group.create(Math.random() * window.innerWidth, Math.random() * -200));
+            var donut = group.create(Math.random() * window.innerWidth, Math.random() * -200); 
+            //console.log(donut);
+            donut.setInteractive();
+            this.input.setDraggable(donut);
+            donuts.push(donut);
             //donut.body.x = Math.random() * 800;
             //donut.body.y = Math.random() * -200;
             //donut.body.setZeroVelocity();
