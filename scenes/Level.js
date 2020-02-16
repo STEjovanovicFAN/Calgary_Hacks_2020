@@ -5,6 +5,7 @@ class Level extends Phaser.Scene {
         this.displayHeight = h;
         this.displayWidth = w;
         this.donuts = [];
+        this.boots = [];
         this.donutRotation = [];
         this.elapsedTime = 0;
         this.level = 1
@@ -31,6 +32,20 @@ class Level extends Phaser.Scene {
         let cs = this.add.sprite(this.displayWidth / 2, this.displayHeight / 2);
         cs.setTexture('calgaryStampede')
         cs.setScale(0.5)
+
+    }
+    createBoot(matter, rotation){
+        let boot = matter.add.sprite(Math.random() * window.innerWidth, Math.random() * 100, 'boot');
+        boot.setInteractive();
+        this.boots.push(boot);
+        let _donutRotation = this.donutRotation
+        let val = _donutRotation.length;
+        boot.setScale(0.2)
+        boot.on('pointerdown', function () {
+            _donutRotation[val] = 0;
+        });
+        this.donutRotation.push(rotation);
+
 
     }
     createDonut(matter, rotation) {
@@ -70,6 +85,7 @@ class Level extends Phaser.Scene {
         this.load.image('donut1', 'assets/sprites/Plain-2-icon.png')
         this.load.image('donut2', 'assets/sprites/Plain1.png')
         this.load.image('donut3', 'assets/sprites/PowderSugared-icon.png')
+        this.load.image('boot', 'assets/sprites/boot.png')
 
         this.load.image("cowboyhat",'assets/sprites/cowboyhat.png')
         this.load.image('sky', 'assets/background/sky.png')
@@ -126,6 +142,9 @@ class Level extends Phaser.Scene {
 
         for (var i = 0; i < 10; i++) {
             this.createDonut(this.matter, this.genRandomRotation())
+            if(Math.random() * i %7 == 0){
+                this.createBoot(this.matter, this.genRandomRotation())
+            }
         }
 
     }
