@@ -3,58 +3,9 @@
 <head>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
     <script type="text/javascript" src="scenes/TitleScene.js"></script>
-    <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript" src="game.js"></script>
 </head>
 <body>
-<<<<<<< HEAD
-
-    <script>
-        var config = {
-        type: Phaser.AUTO,
-        width: window.innerWidth,
-        height: window.innerHeight,
-        scene: {
-            preload: preload,
-            create: create,
-            update: update
-        }
-    };
-
-    var game = new Phaser.Game(config);
-
-    function preload ()
-    {
-        game.load.image('sky', 'assets/sky.png');
-    }
-
-    function create ()
-    {
-        game.add.sprite(100,100,'donut');
-        /*
-        game.stage.backgroundColor = '#124184';
-
-        game.physics.startSystem(Phaser.Physics.BOX2D);
-        game.physics.box2d.gravity.y = 500;
-        game.physics.box2d.friction = 0.9;
-
-        // Add some sprites to show how conveyor behaves
-        for (var i = 0; i < 10; i++)
-        {
-            var sprite = game.add.sprite(Math.random() * 800, Math.random * -200, 'donut');
-            game.physics.box2d.enable(sprite);
-            littleBoxes.push(sprite);
-        }
-        */
-    }
-
-    function update ()
-    {
-    }
-    </script>
-
-=======
     <div id="game"></div>
->>>>>>> 3c5ef13f5b2f9ba464dede07bd03907920b7fe42
 </body>
 </html>
