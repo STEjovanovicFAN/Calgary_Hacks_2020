@@ -5,7 +5,6 @@ var config = {
     physics: {
         default: 'matter',
         matter: {
-            debug: true,
             enableSleeping: true,
             gravity: {
                 y: 0.5
